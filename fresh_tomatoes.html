@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fresh Tomatoes!</title>
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 80px;
+        }
+        .tv_show_bg { 
+            background-color: #1abc9c;
+            color: #607D8B;
+         }
+        .movie_bg { 
+          margin-top: 2cm;
+          background-color: #474e5d; 
+          color: #607D8B;
+        }
+        .btnDescription { 
+          -webkit-border-radius: 28;
+          -moz-border-radius: 28;
+          border-radius: 28px;
+          font-family: Georgia;
+          color: #0f0e0e;
+          font-size: 15px;
+          background: #f0ed57;
+          padding: 10px 20px 10px 20px;
+          text-decoration: none;
+        }
+        
+        .btn:hover {
+          background: #fc8c3c;
+          text-decoration: none;
+        }
+
+        #trailer .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 9001;
+        }
+        #trailer-video {
+            width: 100%;
+            height: 100%;
+        }
+     
+        .tv_show-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
+        .movie-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
+        .scale-media {
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+        .scale-media iframe {
+            border: none;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+        }
+        
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+            
+        // Start playing the video whenever the trailer modal is opened , for movie
+        $(document).on('click', '.movie-tile', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Start playing the video whenever the trailer modal is opened , for tv_show
+        $(document).on('click', '.tv_show-tile', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+
+        // Animate in the movies when the page loads
+        $(document).ready(function () {
+          $('.movie-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+          // Animate in the tv_shows when the page loads
+          $('.tv_show-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+          $('.btnDescription').bind("click", function () {
+                var movie_title =$(this).parent().parent().find('.title').text()
+                var movie_storyline = $(this).parent().parent().find('.storyline').text()
+                var movie_img=$(this).parent().parent().find('.movieimg').attr('src')
+                console.log(movie_img)
+                var url = "video_information.html?title=" + encodeURIComponent(movie_title)+ "&storyline=" + encodeURIComponent(movie_storyline)+ "&srcimage=" + encodeURIComponent(movie_img);
+            
+                window.location.href = url;
+            });
+ 
+        });
+   
+    </script>
+
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Smash Tomatoes Movie Trailers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container tv_show_bg">
+      <h2> TV Shows <h2>
+      
+<div class="col-md-6 col-lg-4 tv_show-tile text-center" data-trailer-youtube-id="HhesaQXLuRY" data-toggle="modal" data-target="#trailer">
+    <img src="http://cdn.collider.com/wp-content/uploads/breaking_bad_season_3_promo_art_01.jpg" width="250" height="360">
+    <h4>Breaking bad</h4>
+
+</div>
+
+<div class="col-md-6 col-lg-4 tv_show-tile text-center" data-trailer-youtube-id="I-8914DuyhY" data-toggle="modal" data-target="#trailer">
+    <img src="http://the-back-row.com/wp-content/uploads/2013/08/79438-breaking-bad-breaking-bad-poster.jpg" width="250" height="360">
+    <h4>Breaking bad</h4>
+
+</div>
+
+<div class="col-md-6 col-lg-4 tv_show-tile text-center" data-trailer-youtube-id="35FKJpexDho" data-toggle="modal" data-target="#trailer">
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/TheWalkingDeadPoster.jpg" width="250" height="360">
+    <h4>Walking dead-'Days Gone Bye'</h4>
+
+</div>
+
+<div class="col-md-6 col-lg-4 tv_show-tile text-center" data-trailer-youtube-id="1OZ0mu8Ey6A" data-toggle="modal" data-target="#trailer">
+    <img src="https://s-media-cache-ak0.pinimg.com/originals/b0/61/d2/b061d28364202bc96dfb8f267876f534.jpg" width="250" height="360">
+    <h4>Walking dead-'What Lies Ahead'</h4>
+
+</div>
+
+
+     </div>
+    <div class="container movie_bg">
+      <h2> Movies <h2>
+      
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="V75dMMIW2B4" data-toggle="modal" data-target="#trailer">
+    <div>
+        <img class="movieimg" src="https://upload.wikimedia.org/wikipedia/en/9/9d/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29_theatrical_poster.jpg" width="250" height="360">
+        <h4 class="title">
+                             The Lord of the Rings,The Fellowship of the Ring
+                             </h4>
+        <p class="storyline" hidden>
+                             The story begins in the Shire, where the hobbit
+                             Frodo Baggins inherits the Ring from Bilbo
+                             Baggins, his cousin and guardian. Neither hobbit
+                             is aware of the Ring's nature, but Gandalf
+                             , a wizard and an old friend of Bilbo, suspects it
+                             to be Sauron's Ring.
+                             </p>
+    </div>
+    <div>
+        <input type="button" class="btnDescription" value="see more ..." />
+        </br>
+   </div>
+ </div>
+ 
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="KYz2wyBy3kc" data-toggle="modal" data-target="#trailer">
+    <div>
+        <img class="movieimg" src="https://lumiere-a.akamaihd.net/v1/images/open-uri20150422-20810-m8zzyx_5670999f.jpeg?region=0,0,300,450" width="250" height="360">
+        <h4 class="title">Toy Story</h4>
+        <p class="storyline" hidden>
+                              Andy loves to be in his room playing with
+                              his toys, especially his doll named 'Woody'.
+                              But, what do the toys do when Andy is not with
+                              them, they come to life.
+                              </p>
+    </div>
+    <div>
+        <input type="button" class="btnDescription" value="see more ..." />
+        </br>
+   </div>
+ </div>
+ 
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="cFv2xPvQfJ4" data-toggle="modal" data-target="#trailer">
+    <div>
+        <img class="movieimg" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg" width="250" height="360">
+        <h4 class="title">The Avengers</h4>
+        <p class="storyline" hidden>
+                            Earth's mightiest heroes must come together and
+                            learn to fight as a team if they are going to
+                            stop the mischievous Loki and his alien army
+                            from enslaving humanity.
+                            </p>
+    </div>
+    <div>
+        <input type="button" class="btnDescription" value="see more ..." />
+        </br>
+   </div>
+ </div>
+ 
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="VyHV0BRtdxo" data-toggle="modal" data-target="#trailer">
+    <div>
+        <img class="movieimg" src="https://images-na.ssl-images-amazon.com/images/M/MV5BNjQ3NWNlNmQtMTE5ZS00MDdmLTlkZjUtZTBlM2UxMGFiMTU3XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_UY1200_CR90,0,630,1200_AL_.jpg" width="250" height="360">
+        <h4 class="title">Harry Potter and the Sorcerer's Stone</h4>
+        <p class="storyline" hidden>
+                            Rescued from the outrageous neglect of his aunt
+                            and uncle, a young boy with a great destiny proves
+                            his worth while attending Hogwarts School
+                            of Witchcraft and Wizardry.
+                            </p>
+    </div>
+    <div>
+        <input type="button" class="btnDescription" value="see more ..." />
+        </br>
+   </div>
+ </div>
+ 
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="5guMumPFBag" data-toggle="modal" data-target="#trailer">
+    <div>
+        <img class="movieimg" src="https://upload.wikimedia.org/wikipedia/en/f/f3/Pacific_Rim_FilmPoster.jpeg" width="250" height="360">
+        <h4 class="title">Pacific Rim</h4>
+        <p class="storyline" hidden>
+                            In 2013, huge alien sea monsters called Kaiju
+                            emerge from an interdimensional portal called
+                            the Breach at the bottom of the Pacific Ocean.
+                            Over the course of three years, the Kaiju wreak
+                            havoc upon coastal cities along the Ring of Fire,
+                            such as San Francisco, Cabo San Lucas,
+                            Sydney, Manila, and Hong Kong.
+                            </p>
+    </div>
+    <div>
+        <input type="button" class="btnDescription" value="see more ..." />
+        </br>
+   </div>
+ </div>
+ 
+
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="eogpIG53Cis" data-toggle="modal" data-target="#trailer">
+    <div>
+        <img class="movieimg" src="https://upload.wikimedia.org/wikipedia/en/5/53/Blade_Runner_poster.jpg" width="250" height="360">
+        <h4 class="title">Blade Runner</h4>
+        <p class="storyline" hidden>
+                            This a 1982 American neo-noir science fiction film
+                            directed by Ridley Scott, written by Hampton
+                            Fancher and David Peoples, and starring Harrison
+                            Ford, Rutger Hauer, Sean Young, and Edward
+                             James Olmos.
+                            </p>
+    </div>
+    <div>
+        <input type="button" class="btnDescription" value="see more ..." />
+        </br>
+   </div>
+ </div>
+ 
+
+    </div>
+   </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Storyline page</title>
+
+   <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 30px;
+            background-color: #1abc9c;
+        }
+        img { 
+          margin-top: 2cm;
+          color: #607D8B;
+          top: -12px;
+          right: -12px;
+          border:3px solid #021a40;
+        }
+        p {
+            display: block;
+            margin-left: 0;
+            margin-right: 0;
+            color: #000000;
+
+        }
+        h3 {
+            color: #5F9EA0;
+            background-color: #8FBC8F;
+
+        }
+
+        div {
+            background-color: #F0F8FF;
+            margin-left: 2cm;
+            
+        }
+
+    </style>
+    <script type="text/javascript">
+        var queryString = new Array();
+        $(function () {
+            if (queryString.length == 0) {
+                // Save the parameters in queryString array
+                if (window.location.search.split('?').length > 1) {
+                    var params = window.location.search.split('?')[1].split('&');
+                    for (var i = 0; i < params.length; i++) {
+                        //parameter name
+                        var key = params[i].split('=')[0];
+                        //parameter value
+                        var value = decodeURIComponent(params[i].split('=')[1]);
+                        queryString[key] = value;
+                    }
+                }
+            }
+            //Get all parameters in queryString array and create the HTML file
+            if (queryString["title"] != null ) {
+                var imagid = queryString["srcimage"];
+                var data = "<img src=\"" + imagid + "\" width=\"300\" height=\"360\"/>";
+                data +="</br><h3>Title</h3></br><p>"+queryString["title"]+"</p></br><h3>Storyline</h3></br><p>"+queryString["storyline"]+"</p>"
+                $("#lblData").html(data);
+            }
+        });
+    </script>
+</head>
+</html>
+<body>
+     <div id="lblData" class="col-md-6 col-lg-4 text-center"></div>   
+</body>
+</html>
